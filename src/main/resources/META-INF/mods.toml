@@ -1,0 +1,28 @@
+modLoader="javafml"
+loaderVersion="[45,)"
+license="MIT"
+
+#issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
+
+[[mods]]
+modId="tut2block"
+version="${file.jarVersion}"
+displayName="Tutorial 2 Block"
+authors="McJty"
+
+description='''
+This is tutorial 2, a block
+'''
+
+[[dependencies.tut2block]]
+    modId="forge"
+    mandatory=true
+    versionRange="[45,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.tut2block]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19.4,1.20)"
+    ordering="NONE"
+    side="BOTH"

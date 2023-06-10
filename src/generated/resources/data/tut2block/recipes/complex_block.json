@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "tutorial",
+  "key": {
+    "d": {
+      "tag": "minecraft:dirt"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "x": {
+      "tag": "forge:gems/diamond"
+    }
+  },
+  "pattern": [
+    "dsd",
+    "dxd",
+    "ddd"
+  ],
+  "result": {
+    "item": "tut2block:complex_block"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "tut2block:block/complex_block"
+    }
+  }
+}
