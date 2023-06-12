@@ -25,7 +25,7 @@ public class Registration {
 
     public static final RegistryObject<ComplexBlock> COMPLEX_BLOCK = BLOCKS.register("complex_block", ComplexBlock::new);
     public static final RegistryObject<Item> COMPLEX_BLOCK_ITEM = ITEMS.register("complex_block", () -> new BlockItem(COMPLEX_BLOCK.get(), new Item.Properties()));
-    public static final RegistryObject<BlockEntityType<ComplexBlockEntity>> TUTORIAL_BLOCK_ENTITY = BLOCK_ENTITIES.register("complex_block",
+    public static final RegistryObject<BlockEntityType<ComplexBlockEntity>> COMPLEX_BLOCK_ENTITY = BLOCK_ENTITIES.register("complex_block",
             () -> BlockEntityType.Builder.of(ComplexBlockEntity::new, COMPLEX_BLOCK.get()).build(null));
 
     public static void init(IEventBus modEventBus) {

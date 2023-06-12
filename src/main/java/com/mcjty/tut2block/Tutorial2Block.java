@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 public class Tutorial2Block {
 
     public static final String MODID = "tut2block";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public Tutorial2Block() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
