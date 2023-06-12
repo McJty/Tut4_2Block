@@ -8,7 +8,7 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -34,8 +34,8 @@ public class Registration {
         BLOCK_ENTITIES.register(modEventBus);
     }
 
-    static void addCreative(CreativeModeTabEvent.BuildContents event) {
-        if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
+    static void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(SIMPLE_BLOCK_ITEM);
             event.accept(COMPLEX_BLOCK_ITEM);
         }

@@ -1,28 +1,31 @@
 plugins {
     id 'eclipse'
+    id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
 
-version = '1.0'
-group = 'com.mcjty.tut2block' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'tut2block'
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = mod_id
+}
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel: 'official', version: '1.19.4'
-
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
+    mappings channel: mapping_channel, version: mapping_version
+    copyIdeResources = true
 
     runs {
         client {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'tut2block'
+            property 'forge.enabledGameTestNamespaces', mod_id
             mods {
-                tut2block {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -32,9 +35,9 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'tut2block'
+            property 'forge.enabledGameTestNamespaces', mod_id
             mods {
-                tut2block {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -44,9 +47,9 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'tut2block'
+            property 'forge.enabledGameTestNamespaces', mod_id
             mods {
-                tut2block {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -56,9 +59,9 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            args '--mod', 'tut2block', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
             mods {
-                tut2block {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -78,27 +81,43 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.4-45.0.64'
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    compileOnly fg.deobf("mezz.jei:jei-1.19.4-common-api:${jei_version}")
-    compileOnly fg.deobf("mezz.jei:jei-1.19.4-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.19.4-forge:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
     implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${top_version}") {
             transitive = false
     })
 }
 
-// Example for how to get properties into the manifest for reading at runtime.
+def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta']
+def replaceProperties = [
+        minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
+        forge_version: forge_version, forge_version_range: forge_version_range,
+        loader_version_range: loader_version_range,
+        mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+        mod_authors: mod_authors, mod_description: mod_description
+]
+processResources {
+    inputs.properties replaceProperties
+    replaceProperties.put 'project', project
+
+    filesMatching(resourceTargets) {
+        expand replaceProperties
+    }
+}
+
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "tut2block",
-                "Specification-Vendor"    : "tut2block",
+                "Specification-Title"     : mod_id,
+                "Specification-Vendor"    : mod_authors,
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "tut2block",
+                "Implementation-Vendor"   : mod_authors,
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
