@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,6 +22,8 @@ import javax.annotation.Nullable;
 import static com.mcjty.tut2block.Registration.COMPLEX_BLOCK_ENTITY;
 
 public class ComplexBlockEntity extends BlockEntity {
+
+    public static final String ITEMS_TAG = "Items";
 
     public static int SLOT_COUNT = 1;
     public static int SLOT = 0;
@@ -39,7 +42,27 @@ public class ComplexBlockEntity extends BlockEntity {
     }
 
     public void tickServer() {
+        if (level.getGameTime() % 20 == 0) {
+            ItemStack stack = items.getStackInSlot(SLOT);
+            if (!stack.isEmpty()) {
+                if (stack.isDamageableItem()) {
+                    // Increase durability of item
+                    int value = stack.getDamageValue();
+                    if (value > 0) {
+                        stack.setDamageValue(value - 1);
+                    } else {
+                        ejectItem();
+                    }
+                } else {
+                    ejectItem();
+                }
+            }
+        }
+    }
 
+    private void ejectItem() {
+        BlockPos pos = worldPosition.relative(Direction.UP);
+        Block.popResource(level, pos, items.extractItem(SLOT, 1, false));
     }
 
     // The getUpdateTag()/handleUpdateTag() pair is called whenever the client receives a new chunk
@@ -72,7 +95,9 @@ public class ComplexBlockEntity extends BlockEntity {
         // This is called client side
         CompoundTag tag = pkt.getTag();
         // This will call loadClientData()
-        handleUpdateTag(tag);
+        if (tag != null) {
+            handleUpdateTag(tag);
+        }
     }
 
     @Override
@@ -82,7 +107,7 @@ public class ComplexBlockEntity extends BlockEntity {
     }
 
     private void saveClientData(CompoundTag tag) {
-        tag.put("Inventory", items.serializeNBT());
+        tag.put(ITEMS_TAG, items.serializeNBT());
     }
 
     @Override
@@ -92,8 +117,8 @@ public class ComplexBlockEntity extends BlockEntity {
     }
 
     private void loadClientData(CompoundTag tag) {
-        if (tag.contains("Inventory")) {
-            items.deserializeNBT(tag.getCompound("Inventory"));
+        if (tag.contains(ITEMS_TAG)) {
+            items.deserializeNBT(tag.getCompound(ITEMS_TAG));
         }
     }
 

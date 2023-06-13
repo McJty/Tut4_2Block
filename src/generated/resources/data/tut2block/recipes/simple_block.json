@@ -3,10 +3,10 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "tut2block:simple_block"
+      "tag": "minecraft:dirt"
     },
     {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     }
   ],
   "result": {

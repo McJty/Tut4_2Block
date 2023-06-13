@@ -28,5 +28,6 @@
     "recipes": [
       "tut2block:simple_block"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

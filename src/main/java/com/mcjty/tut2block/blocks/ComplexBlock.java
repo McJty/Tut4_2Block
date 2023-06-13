@@ -16,7 +16,10 @@ public class ComplexBlock extends Block implements EntityBlock {
 
     public ComplexBlock() {
         // Let our block behave like a metal block
-        super(BlockBehaviour.Properties.of().sound(SoundType.METAL));
+        super(BlockBehaviour.Properties.of()
+                .strength(3.5F)
+                .requiresCorrectToolForDrops()
+                .sound(SoundType.METAL));
     }
 
     // Our block has an associated block entity. This method from EntityBlock is used to create that block entity

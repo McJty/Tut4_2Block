@@ -18,7 +18,10 @@ public class SimpleBlock extends Block {
 
     public SimpleBlock() {
         // Let our block behave like a metal block
-        super(Properties.of().sound(SoundType.METAL).randomTicks());
+        super(Properties.of()
+                .strength(3.5F)
+                .requiresCorrectToolForDrops()
+                .sound(SoundType.METAL).randomTicks());
     }
 
     @Override
@@ -29,7 +32,7 @@ public class SimpleBlock extends Block {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         if (level.isClientSide) {
-            level.explode((Entity) null, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, 2f, false, Level.ExplosionInteraction.MOB);
+            level.explode(null, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, 2f, false, Level.ExplosionInteraction.MOB);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
