@@ -62,7 +62,7 @@ public class ComplexBlockEntity extends BlockEntity {
 
     private void ejectItem() {
         BlockPos pos = worldPosition.relative(Direction.UP);
-//        Block.popResource(level, pos, items.extractItem(SLOT, 1, false));
+        Block.popResource(level, pos, items.extractItem(SLOT, 1, false));
     }
 
     // The getUpdateTag()/handleUpdateTag() pair is called whenever the client receives a new chunk
