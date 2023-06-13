@@ -23,7 +23,7 @@ import static com.mcjty.tut2block.Registration.COMPLEX_BLOCK_ENTITY;
 
 public class ComplexBlockEntity extends BlockEntity {
 
-    public static final String ITEMS_TAG = "Items";
+    public static final String ITEMS_TAG = "Inventory";
 
     public static int SLOT_COUNT = 1;
     public static int SLOT = 0;
@@ -62,7 +62,7 @@ public class ComplexBlockEntity extends BlockEntity {
 
     private void ejectItem() {
         BlockPos pos = worldPosition.relative(Direction.UP);
-        Block.popResource(level, pos, items.extractItem(SLOT, 1, false));
+//        Block.popResource(level, pos, items.extractItem(SLOT, 1, false));
     }
 
     // The getUpdateTag()/handleUpdateTag() pair is called whenever the client receives a new chunk
