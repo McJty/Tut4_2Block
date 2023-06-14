@@ -21,7 +21,8 @@ public class SimpleBlock extends Block {
         super(Properties.of()
                 .strength(3.5F)
                 .requiresCorrectToolForDrops()
-                .sound(SoundType.METAL).randomTicks());
+                .sound(SoundType.METAL)
+                .randomTicks());
     }
 
     @Override

@@ -31,13 +31,12 @@ public class ComplexBlockRenderer implements BlockEntityRenderer<ComplexBlockEnt
     @Override
     public void render(ComplexBlockEntity be, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
         be.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-            poseStack.pushPose();
-
-            ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-
-            long millis = System.currentTimeMillis();
             ItemStack stack = h.getStackInSlot(ComplexBlockEntity.SLOT);
             if (!stack.isEmpty()) {
+                ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+                long millis = System.currentTimeMillis();
+
+                poseStack.pushPose();
                 poseStack.pushPose();
                 poseStack.scale(.5f, .5f, .5f);
                 poseStack.translate(1f, 2.8f, 1f);
@@ -48,12 +47,9 @@ public class ComplexBlockRenderer implements BlockEntityRenderer<ComplexBlockEnt
 
                 poseStack.translate(0, 0.5f, 0);
                 renderBillboardQuadBright(poseStack, bufferSource.getBuffer(RenderType.translucent()), 0.5f, LIGHT);
+                poseStack.popPose();
             }
-
-            poseStack.popPose();
         });
-
-
     }
 
 

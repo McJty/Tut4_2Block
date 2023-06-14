@@ -96,7 +96,7 @@ public class ComplexBlockEntity extends BlockEntity {
         CompoundTag tag = pkt.getTag();
         // This will call loadClientData()
         if (tag != null) {
-            handleUpdateTag(tag);
+            loadClientData(tag);
         }
     }
 
