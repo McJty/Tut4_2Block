@@ -2,5 +2,9 @@
   "block.tut2block.complex_block": "Complex Block",
   "block.tut2block.processor_block": "Processor",
   "block.tut2block.simple_block": "Simple Block",
-  "screen.tutorial.processor": "Processor"
+  "tutorial.message.break": "Block loot: %s",
+  "tutorial.message.melt": "Melt input: %s",
+  "tutorial.message.sound": "Play break sound: %s",
+  "tutorial.message.spawn": "Spawn egg: %s",
+  "tutorial.screen.processor": "Processor"
 }

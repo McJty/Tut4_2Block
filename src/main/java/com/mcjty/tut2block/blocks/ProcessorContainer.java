@@ -21,7 +21,12 @@ public class ProcessorContainer extends AbstractContainerMenu {
         if (player.level().getBlockEntity(pos) instanceof ProcessorBlockEntity processor) {
             processor.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
                 addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_INPUT, 64, 24));
-                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_OUTPUT, 108, 24));
+                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_OUTPUT+0, 108, 24));
+                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_OUTPUT+1, 126, 24));
+                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_OUTPUT+2, 144, 24));
+                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_OUTPUT+3, 108, 42));
+                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_OUTPUT+4, 126, 42));
+                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_OUTPUT+5, 144, 42));
             });
         }
         layoutPlayerInventorySlots(player.getInventory(), 10, 70);

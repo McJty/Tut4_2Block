@@ -24,6 +24,7 @@ public class PacketHitToServer {
     }
 
     public void toBytes(FriendlyByteBuf buf) {
+        buf.writeBlockPos(pos);
         buf.writeByte(button);
     }
 
@@ -33,7 +34,7 @@ public class PacketHitToServer {
             // Here we are server side
             ServerPlayer player = ctx.getSender();
             if (player.level().getBlockEntity(pos) instanceof ProcessorBlockEntity processor) {
-                processor.hit(button);
+                processor.hit(player, button);
             }
         });
         return true;

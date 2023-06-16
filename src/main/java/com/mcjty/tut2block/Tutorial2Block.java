@@ -1,5 +1,6 @@
 package com.mcjty.tut2block;
 
+import com.mcjty.tut2block.compat.TopCompatibility;
 import com.mcjty.tut2block.datagen.DataGeneration;
 import com.mcjty.tut2block.network.Channel;
 import com.mojang.logging.LogUtils;
@@ -29,5 +30,6 @@ public class Tutorial2Block {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         Channel.register();
+        TopCompatibility.register();
     }
 }
