@@ -1,7 +1,9 @@
 package com.mcjty.tut2block;
 
 import com.mcjty.tut2block.datagen.DataGeneration;
+import com.mcjty.tut2block.network.Channel;
 import com.mojang.logging.LogUtils;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -21,8 +23,11 @@ public class Tutorial2Block {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(Registration::addCreative);
         modEventBus.addListener(DataGeneration::generate);
+
+        MinecraftForge.EVENT_BUS.register(new ForgeEventHandlers());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        Channel.register();
     }
 }

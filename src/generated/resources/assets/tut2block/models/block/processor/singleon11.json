@@ -1,0 +1,39 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#button"
+        },
+        "east": {
+          "texture": "#button"
+        },
+        "north": {
+          "texture": "#button"
+        },
+        "south": {
+          "texture": "#button"
+        },
+        "up": {
+          "texture": "#button"
+        },
+        "west": {
+          "texture": "#button"
+        }
+      },
+      "from": [
+        10,
+        14,
+        10
+      ],
+      "to": [
+        14,
+        16,
+        14
+      ]
+    }
+  ],
+  "textures": {
+    "button": "tut2block:block/processor_on"
+  }
+}

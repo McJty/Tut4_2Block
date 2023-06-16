@@ -1,6 +1,7 @@
 {
   "values": [
     "tut2block:complex_block",
-    "tut2block:simple_block"
+    "tut2block:simple_block",
+    "tut2block:processor_block"
   ]
 }

@@ -38,5 +38,17 @@ public class TutRecipes extends RecipeProvider {
                         ItemPredicate.Builder.item().of(Tags.Items.GEMS_DIAMOND).build()))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.PROCESSOR_BLOCK.get())
+                .pattern("iii")
+                .pattern("rgr")
+                .pattern("iii")
+                .define('i', Tags.Items.INGOTS_IRON)
+                .define('r', Tags.Items.DUSTS_REDSTONE)
+                .define('g', Tags.Items.GLASS)
+                .group("tutorial")
+                .unlockedBy("has_redstone", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        ItemPredicate.Builder.item().of(Tags.Items.DUSTS_REDSTONE).build()))
+                .save(consumer);
+
     }
 }

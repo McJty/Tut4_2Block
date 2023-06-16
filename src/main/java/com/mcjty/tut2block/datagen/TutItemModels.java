@@ -16,5 +16,6 @@ public class TutItemModels extends ItemModelProvider {
     protected void registerModels() {
         withExistingParent(Registration.SIMPLE_BLOCK.getId().getPath(), modLoc("block/simple_block"));
         withExistingParent(Registration.COMPLEX_BLOCK.getId().getPath(), modLoc("block/complex_block"));
+        withExistingParent(Registration.PROCESSOR_BLOCK.getId().getPath(), modLoc("block/processor_main"));
     }
 }

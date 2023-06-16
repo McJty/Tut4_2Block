@@ -20,8 +20,8 @@ public class TutBlockTags extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(Registration.COMPLEX_BLOCK.get(), Registration.SIMPLE_BLOCK.get());
+                .add(Registration.COMPLEX_BLOCK.get(), Registration.SIMPLE_BLOCK.get(), Registration.PROCESSOR_BLOCK.get());
         tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(Registration.COMPLEX_BLOCK.get(), Registration.SIMPLE_BLOCK.get());
+                .add(Registration.COMPLEX_BLOCK.get(), Registration.SIMPLE_BLOCK.get(), Registration.PROCESSOR_BLOCK.get());
      }
 }

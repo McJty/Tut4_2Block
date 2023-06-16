@@ -1,0 +1,556 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "tut2block:block/processor_main",
+        "x": 180
+      },
+      "when": {
+        "facing": "down"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff00",
+        "x": 180
+      },
+      "when": {
+        "button00": "false",
+        "facing": "down"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon00",
+        "x": 180
+      },
+      "when": {
+        "button00": "true",
+        "facing": "down"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff10",
+        "x": 180
+      },
+      "when": {
+        "button10": "false",
+        "facing": "down"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon10",
+        "x": 180
+      },
+      "when": {
+        "button10": "true",
+        "facing": "down"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff01",
+        "x": 180
+      },
+      "when": {
+        "button01": "false",
+        "facing": "down"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon01",
+        "x": 180
+      },
+      "when": {
+        "button01": "true",
+        "facing": "down"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff11",
+        "x": 180
+      },
+      "when": {
+        "button11": "false",
+        "facing": "down"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon11",
+        "x": 180
+      },
+      "when": {
+        "button11": "true",
+        "facing": "down"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor_main"
+      },
+      "when": {
+        "facing": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff00"
+      },
+      "when": {
+        "button00": "false",
+        "facing": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon00"
+      },
+      "when": {
+        "button00": "true",
+        "facing": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff10"
+      },
+      "when": {
+        "button10": "false",
+        "facing": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon10"
+      },
+      "when": {
+        "button10": "true",
+        "facing": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff01"
+      },
+      "when": {
+        "button01": "false",
+        "facing": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon01"
+      },
+      "when": {
+        "button01": "true",
+        "facing": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff11"
+      },
+      "when": {
+        "button11": "false",
+        "facing": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon11"
+      },
+      "when": {
+        "button11": "true",
+        "facing": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor_main",
+        "x": 90
+      },
+      "when": {
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff00",
+        "x": 90
+      },
+      "when": {
+        "button00": "false",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon00",
+        "x": 90
+      },
+      "when": {
+        "button00": "true",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff10",
+        "x": 90
+      },
+      "when": {
+        "button10": "false",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon10",
+        "x": 90
+      },
+      "when": {
+        "button10": "true",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff01",
+        "x": 90
+      },
+      "when": {
+        "button01": "false",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon01",
+        "x": 90
+      },
+      "when": {
+        "button01": "true",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff11",
+        "x": 90
+      },
+      "when": {
+        "button11": "false",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon11",
+        "x": 90
+      },
+      "when": {
+        "button11": "true",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor_main",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff00",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "button00": "false",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon00",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "button00": "true",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff10",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "button10": "false",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon10",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "button10": "true",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff01",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "button01": "false",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon01",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "button01": "true",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff11",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "button11": "false",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon11",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "button11": "true",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor_main",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff00",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "button00": "false",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon00",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "button00": "true",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff10",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "button10": "false",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon10",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "button10": "true",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff01",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "button01": "false",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon01",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "button01": "true",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff11",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "button11": "false",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon11",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "button11": "true",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor_main",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff00",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "button00": "false",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon00",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "button00": "true",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff10",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "button10": "false",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon10",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "button10": "true",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff01",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "button01": "false",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon01",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "button01": "true",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleoff11",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "button11": "false",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "tut2block:block/processor/singleon11",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "button11": "true",
+        "facing": "east"
+      }
+    }
+  ]
+}
