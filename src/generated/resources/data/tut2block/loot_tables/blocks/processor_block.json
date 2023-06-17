@@ -16,8 +16,19 @@
               "ops": [
                 {
                   "op": "replace",
-                  "source": "Inventory",
-                  "target": "BlockEntityTag.Inventory"
+                  "source": "Input",
+                  "target": "BlockEntityTag.Input"
+                }
+              ],
+              "source": "block_entity"
+            },
+            {
+              "function": "minecraft:copy_nbt",
+              "ops": [
+                {
+                  "op": "replace",
+                  "source": "Output",
+                  "target": "BlockEntityTag.Output"
                 }
               ],
               "source": "block_entity"
