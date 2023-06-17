@@ -2,6 +2,7 @@ package com.mcjty.tut2block.blocks;
 
 import com.mcjty.tut2block.Registration;
 import com.mcjty.tut2block.tools.FilteredItemHandler;
+import com.mcjty.tut2block.tools.Tools;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -77,10 +78,10 @@ public class ProcessorBlockEntity extends BlockEntity {
         ItemStack stack = items.extractItem(SLOT_INPUT, 1, false);
         if (!stack.isEmpty()) {
             // Depending on the pressed buttons we will do some processing for the current item
-            boolean button0 = getBlockState().getValue(ProcessorBlock.BUTTON00);
-            boolean button1 = getBlockState().getValue(ProcessorBlock.BUTTON01);
-            boolean button2 = getBlockState().getValue(ProcessorBlock.BUTTON10);
-            boolean button3 = getBlockState().getValue(ProcessorBlock.BUTTON11);
+            boolean button0 = getBlockState().getValue(ProcessorBlock.BUTTON10);
+            boolean button1 = getBlockState().getValue(ProcessorBlock.BUTTON00);
+            boolean button2 = getBlockState().getValue(ProcessorBlock.BUTTON11);
+            boolean button3 = getBlockState().getValue(ProcessorBlock.BUTTON01);
 
             // We have an item in the input slot. We will do some processing depending on
             // the pressed buttons and put the result in one of the output slots
@@ -105,7 +106,7 @@ public class ProcessorBlockEntity extends BlockEntity {
 
     // Try to insert the item in the output. Eject if no room
     private void insertOrEject(ItemStack stack) {
-        ItemStack itemStack = ItemHandlerHelper.insertItem(outputItems, stack, false);
+        ItemStack itemStack = Tools.insertItem(items, stack, false, (slot, s) -> slot >= SLOT_OUTPUT);
         if (!itemStack.isEmpty()) {
             ItemEntity entityitem = new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 0.5, worldPosition.getZ(), itemStack);
             entityitem.setPickUpDelay(40);
