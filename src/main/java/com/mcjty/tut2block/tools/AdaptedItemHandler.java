@@ -1,16 +1,14 @@
 package com.mcjty.tut2block.tools;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class FilteredItemHandler implements IItemHandler, IItemHandlerModifiable {
+public class AdaptedItemHandler implements IItemHandlerModifiable {
 
-    private final ItemStackHandler handler;
+    private final IItemHandlerModifiable handler;
 
-    public FilteredItemHandler(ItemStackHandler handler) {
+    public AdaptedItemHandler(IItemHandlerModifiable handler) {
         this.handler = handler;
     }
 

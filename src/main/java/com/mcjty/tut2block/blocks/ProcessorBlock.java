@@ -39,12 +39,12 @@ public class ProcessorBlock extends Block implements EntityBlock {
     public static final BooleanProperty BUTTON10 = BooleanProperty.create("button10");
     public static final BooleanProperty BUTTON11 = BooleanProperty.create("button11");
 
-    private static final VoxelShape SHAPE_DOWN = Shapes.box(0, .2, 0, 1, 1, 1);
-    private static final VoxelShape SHAPE_UP = Shapes.box(0, 0, 0, 1, .8, 1);
-    private static final VoxelShape SHAPE_NORTH = Shapes.box(0, 0, .2, 1, 1, 1);
-    private static final VoxelShape SHAPE_SOUTH = Shapes.box(0, 0, 0, 1, 1, .8);
-    private static final VoxelShape SHAPE_WEST = Shapes.box(.2, 0, 0, 1, 1, 1);
-    private static final VoxelShape SHAPE_EAST = Shapes.box(0, 0, 0, .8, 1, 1);
+    private static final VoxelShape SHAPE_DOWN = Shapes.box(0, 2.0/16, 0, 1, 1, 1);
+    private static final VoxelShape SHAPE_UP = Shapes.box(0, 0, 0, 1, 14.0/16, 1);
+    private static final VoxelShape SHAPE_NORTH = Shapes.box(0, 0, 2.0/16, 1, 1, 1);
+    private static final VoxelShape SHAPE_SOUTH = Shapes.box(0, 0, 0, 1, 1, 14.0/16);
+    private static final VoxelShape SHAPE_WEST = Shapes.box(2.0/16, 0, 0, 1, 1, 1);
+    private static final VoxelShape SHAPE_EAST = Shapes.box(0, 0, 0, 14.0/16, 1, 1);
 
     public ProcessorBlock() {
         // Let our block behave like a metal block

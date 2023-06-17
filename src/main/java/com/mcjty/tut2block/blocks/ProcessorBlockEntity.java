@@ -1,8 +1,7 @@
 package com.mcjty.tut2block.blocks;
 
 import com.mcjty.tut2block.Registration;
-import com.mcjty.tut2block.tools.FilteredItemHandler;
-import com.mcjty.tut2block.tools.Tools;
+import com.mcjty.tut2block.tools.AdaptedItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -34,6 +33,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -42,21 +42,37 @@ import java.util.List;
 
 public class ProcessorBlockEntity extends BlockEntity {
 
-    public static final String ITEMS_TAG = "Inventory";
+    public static final String ITEMS_INPUT_TAG = "Input";
+    public static final String ITEMS_OUTPUT_TAG = "Output";
 
     public static final String ACTION_MELT = "tutorial.message.melt";
     public static final String ACTION_BREAK = "tutorial.message.break";
     public static final String ACTION_SOUND = "tutorial.message.sound";
     public static final String ACTION_SPAWN = "tutorial.message.spawn";
 
-    public static final int SLOT_COUNT = 7;
     public static final int SLOT_INPUT = 0;
-    public static final int SLOT_OUTPUT = 1;
+    public static final int SLOT_INPUT_COUNT = 1;
 
-    private final ItemStackHandler items = createItemHandler();
-    private final LazyOptional<IItemHandler> itemHandler = LazyOptional.of(() -> items);
-    private final LazyOptional<IItemHandler> inputItemHandler = LazyOptional.of(this::createInputItemHandler);
-    private final LazyOptional<IItemHandler> outputItemHandler = LazyOptional.of(this::createOutputItemHandler);
+    public static final int SLOT_OUTPUT = 0;
+    public static final int SLOT_OUTPUT_COUNT = 6;
+
+    public static final int SLOT_COUNT = SLOT_INPUT_COUNT + SLOT_OUTPUT_COUNT;
+
+    private final ItemStackHandler inputItems = createItemHandler(SLOT_INPUT_COUNT);
+    private final ItemStackHandler outputItems = createItemHandler(SLOT_OUTPUT_COUNT);
+    private final LazyOptional<IItemHandler> itemHandler = LazyOptional.of(() -> new CombinedInvWrapper(inputItems, outputItems));
+    private final LazyOptional<IItemHandler> inputItemHandler = LazyOptional.of(() -> new AdaptedItemHandler(inputItems) {
+        @Override
+        public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
+    });
+    private final LazyOptional<IItemHandler> outputItemHandler = LazyOptional.of(() -> new AdaptedItemHandler(outputItems) {
+        @Override
+        public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+            return stack;
+        }
+    });
 
     public ProcessorBlockEntity(BlockPos pos, BlockState state) {
         super(Registration.PROCESSOR_BLOCK_ENTITY.get(), pos, state);
@@ -75,40 +91,38 @@ public class ProcessorBlockEntity extends BlockEntity {
             return;
         }
 
-        ItemStack stack = items.extractItem(SLOT_INPUT, 1, false);
-        if (!stack.isEmpty()) {
-            // Depending on the pressed buttons we will do some processing for the current item
-            boolean button0 = getBlockState().getValue(ProcessorBlock.BUTTON10);
-            boolean button1 = getBlockState().getValue(ProcessorBlock.BUTTON00);
-            boolean button2 = getBlockState().getValue(ProcessorBlock.BUTTON11);
-            boolean button3 = getBlockState().getValue(ProcessorBlock.BUTTON01);
+        // Depending on the pressed buttons we will do some processing for the current item
+        boolean button0 = getBlockState().getValue(ProcessorBlock.BUTTON10);
+        boolean button1 = getBlockState().getValue(ProcessorBlock.BUTTON00);
+        boolean button2 = getBlockState().getValue(ProcessorBlock.BUTTON11);
+        boolean button3 = getBlockState().getValue(ProcessorBlock.BUTTON01);
 
-            // We have an item in the input slot. We will do some processing depending on
-            // the pressed buttons and put the result in one of the output slots
-            if (button0) {
-                insertOrEject(meltItem(stack));
-            }
-            if (button1) {
-                insertOrEject(breakAsBlock(stack));
-            }
-            if (button2) {
-                insertOrEject(playSound(stack));
-            }
-            if (button3) {
-                insertOrEject(spawnMob(stack));
-            }
-            // If no buttons are pressed we simply put back the stack
-            if (!button0 && !button1 && !button2 && !button3) {
-                insertOrEject(stack);
+        if (button0 || button1 || button2  || button3) {
+            ItemStack stack = inputItems.extractItem(SLOT_INPUT, 1, false);
+            if (!stack.isEmpty()) {
+                // We have an item in the input slot. We will do some processing depending on
+                // the pressed buttons and put the result in one of the output slots
+                if (button0) {
+                    insertOrEject(meltItem(stack));
+                }
+                if (button1) {
+                    insertOrEject(breakAsBlock(stack));
+                }
+                if (button2) {
+                    insertOrEject(playSound(stack));
+                }
+                if (button3) {
+                    insertOrEject(spawnMob(stack));
+                }
             }
         }
     }
 
     // Try to insert the item in the output. Eject if no room
     private void insertOrEject(ItemStack stack) {
-        ItemStack itemStack = Tools.insertItem(items, stack, false, (slot, s) -> slot >= SLOT_OUTPUT);
+        ItemStack itemStack = ItemHandlerHelper.insertItem(outputItems, stack, false);
         if (!itemStack.isEmpty()) {
-            ItemEntity entityitem = new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 0.5, worldPosition.getZ(), itemStack);
+            ItemEntity entityitem = new ItemEntity(level, worldPosition.getX()+.5, worldPosition.getY() + 1, worldPosition.getZ()+.5, itemStack);
             entityitem.setPickUpDelay(40);
             entityitem.setDeltaMovement(entityitem.getDeltaMovement().multiply(0, 1, 0));
             level.addFreshEntity(entityitem);
@@ -135,7 +149,7 @@ public class ProcessorBlockEntity extends BlockEntity {
             }
             return drops.get(level.random.nextInt(drops.size()));
         } else {
-            return ItemStack.EMPTY;
+            return stack;
         }
     }
 
@@ -145,7 +159,7 @@ public class ProcessorBlockEntity extends BlockEntity {
             SoundEvent sound = block.defaultBlockState().getSoundType().getBreakSound();
             level.playSound(null, worldPosition, sound, SoundSource.BLOCKS, 1, 1);
         }
-        return ItemStack.EMPTY;
+        return stack;
     }
 
     private ItemStack spawnMob(ItemStack stack) {
@@ -185,9 +199,17 @@ public class ProcessorBlockEntity extends BlockEntity {
         level.playSound(null, worldPosition, value ? SoundEvents.STONE_BUTTON_CLICK_ON : SoundEvents.STONE_BUTTON_CLICK_OFF, SoundSource.BLOCKS, 1, 1);
     }
 
+    public ItemStackHandler getInputItems() {
+        return inputItems;
+    }
+
+    public ItemStackHandler getOutputItems() {
+        return outputItems;
+    }
+
     @Nonnull
-    private ItemStackHandler createItemHandler() {
-        return new ItemStackHandler(SLOT_COUNT) {
+    private ItemStackHandler createItemHandler(int slots) {
+        return new ItemStackHandler(slots) {
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
@@ -195,55 +217,21 @@ public class ProcessorBlockEntity extends BlockEntity {
         };
     }
 
-    @Nonnull
-    private FilteredItemHandler createInputItemHandler() {
-        return new FilteredItemHandler(items) {
-            @Override
-            public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-                if (slot == SLOT_INPUT) {
-                    return super.insertItem(slot, stack, simulate);
-                } else {
-                    return stack;
-                }
-            }
-
-            @Override
-            public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
-                return ItemStack.EMPTY;
-            }
-        };
-    }
-
-    @Nonnull
-    private FilteredItemHandler createOutputItemHandler() {
-        return new FilteredItemHandler(items) {
-            @Override
-            public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-                return stack;
-            }
-
-            @Override
-            public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
-                if (slot != SLOT_INPUT) {
-                    return super.extractItem(slot, amount, simulate);
-                } else {
-                    return ItemStack.EMPTY;
-                }
-            }
-        };
-    }
-
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.put(ITEMS_TAG, items.serializeNBT());
+        tag.put(ITEMS_INPUT_TAG, inputItems.serializeNBT());
+        tag.put(ITEMS_OUTPUT_TAG, outputItems.serializeNBT());
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        if (tag.contains(ITEMS_TAG)) {
-            items.deserializeNBT(tag.getCompound(ITEMS_TAG));
+        if (tag.contains(ITEMS_INPUT_TAG)) {
+            inputItems.deserializeNBT(tag.getCompound(ITEMS_INPUT_TAG));
+        }
+        if (tag.contains(ITEMS_OUTPUT_TAG)) {
+            outputItems.deserializeNBT(tag.getCompound(ITEMS_OUTPUT_TAG));
         }
     }
 

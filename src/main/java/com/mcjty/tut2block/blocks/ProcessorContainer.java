@@ -3,6 +3,7 @@ package com.mcjty.tut2block.blocks;
 import com.mcjty.tut2block.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -10,6 +11,9 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
+
+import static com.mcjty.tut2block.blocks.ProcessorBlockEntity.SLOT_COUNT;
+import static com.mcjty.tut2block.blocks.ProcessorBlockEntity.SLOT_INPUT;
 
 public class ProcessorContainer extends AbstractContainerMenu {
 
@@ -19,15 +23,13 @@ public class ProcessorContainer extends AbstractContainerMenu {
         super(Registration.PROCESSOR_CONTAINER.get(), windowId);
         this.pos = pos;
         if (player.level().getBlockEntity(pos) instanceof ProcessorBlockEntity processor) {
-            processor.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_INPUT, 64, 24));
-                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_OUTPUT+0, 108, 24));
-                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_OUTPUT+1, 126, 24));
-                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_OUTPUT+2, 144, 24));
-                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_OUTPUT+3, 108, 42));
-                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_OUTPUT+4, 126, 42));
-                addSlot(new SlotItemHandler(h, ProcessorBlockEntity.SLOT_OUTPUT+5, 144, 42));
-            });
+            addSlot(new SlotItemHandler(processor.getInputItems(), SLOT_INPUT, 64, 24));
+            addSlot(new SlotItemHandler(processor.getOutputItems(), ProcessorBlockEntity.SLOT_OUTPUT+0, 108, 24));
+            addSlot(new SlotItemHandler(processor.getOutputItems(), ProcessorBlockEntity.SLOT_OUTPUT+1, 126, 24));
+            addSlot(new SlotItemHandler(processor.getOutputItems(), ProcessorBlockEntity.SLOT_OUTPUT+2, 144, 24));
+            addSlot(new SlotItemHandler(processor.getOutputItems(), ProcessorBlockEntity.SLOT_OUTPUT+3, 108, 42));
+            addSlot(new SlotItemHandler(processor.getOutputItems(), ProcessorBlockEntity.SLOT_OUTPUT+4, 126, 42));
+            addSlot(new SlotItemHandler(processor.getOutputItems(), ProcessorBlockEntity.SLOT_OUTPUT+5, 144, 42));
         }
         layoutPlayerInventorySlots(player.getInventory(), 10, 70);
     }
@@ -65,17 +67,17 @@ public class ProcessorContainer extends AbstractContainerMenu {
         if (slot.hasItem()) {
             ItemStack stack = slot.getItem();
             itemstack = stack.copy();
-            if (index == ProcessorBlockEntity.SLOT_OUTPUT || index == ProcessorBlockEntity.SLOT_INPUT) {
-                if (!this.moveItemStackTo(stack, 1, 37, true)) {
+            if (index < SLOT_COUNT) {
+                if (!this.moveItemStackTo(stack, SLOT_COUNT, Inventory.INVENTORY_SIZE + SLOT_COUNT, true)) {
                     return ItemStack.EMPTY;
                 }
             }
-            if (!this.moveItemStackTo(stack, ProcessorBlockEntity.SLOT_INPUT, ProcessorBlockEntity.SLOT_INPUT+1, false)) {
-                if (index < 27 + ProcessorBlockEntity.SLOT_COUNT) {
-                    if (!this.moveItemStackTo(stack, 27 + ProcessorBlockEntity.SLOT_COUNT, 36 + ProcessorBlockEntity.SLOT_COUNT, false)) {
+            if (!this.moveItemStackTo(stack, SLOT_INPUT, SLOT_INPUT+1, false)) {
+                if (index < 27 + SLOT_COUNT) {
+                    if (!this.moveItemStackTo(stack, 27 + SLOT_COUNT, 36 + SLOT_COUNT, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index < 36 + ProcessorBlockEntity.SLOT_COUNT && !this.moveItemStackTo(stack, ProcessorBlockEntity.SLOT_COUNT, 27 + ProcessorBlockEntity.SLOT_COUNT, false)) {
+                } else if (index < Inventory.INVENTORY_SIZE + SLOT_COUNT && !this.moveItemStackTo(stack, SLOT_COUNT, 27 + SLOT_COUNT, false)) {
                     return ItemStack.EMPTY;
                 }
             }
