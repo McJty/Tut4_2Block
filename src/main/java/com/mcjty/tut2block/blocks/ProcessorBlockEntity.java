@@ -137,8 +137,7 @@ public class ProcessorBlockEntity extends BlockEntity {
 
     private ItemStack breakAsBlock(ItemStack stack) {
         // Check if the item is a block item then get the loot that we would get when it is broken
-        if (stack.getItem() instanceof BlockItem) {
-            BlockItem blockItem = (BlockItem) stack.getItem();
+        if (stack.getItem() instanceof BlockItem blockItem) {
             LootParams.Builder paramsBuilder = new LootParams.Builder((ServerLevel) level)
                     .withParameter(LootContextParams.ORIGIN, new Vec3(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()))
                     .withParameter(LootContextParams.TOOL, new ItemStack(Items.DIAMOND_PICKAXE));

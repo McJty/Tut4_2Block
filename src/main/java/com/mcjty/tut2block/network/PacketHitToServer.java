@@ -30,13 +30,11 @@ public class PacketHitToServer {
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context ctx = supplier.get();
-        ctx.enqueueWork(() -> {
-            // Here we are server side
-            ServerPlayer player = ctx.getSender();
-            if (player.level().getBlockEntity(pos) instanceof ProcessorBlockEntity processor) {
-                processor.hit(player, button);
-            }
-        });
+        // Here we are server side
+        ServerPlayer player = ctx.getSender();
+        if (player.level().getBlockEntity(pos) instanceof ProcessorBlockEntity processor) {
+            processor.hit(player, button);
+        };
         return true;
     }
 
