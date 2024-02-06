@@ -5,7 +5,7 @@ import com.mcjty.tut2block.Tutorial2Block;
 import com.mcjty.tut2block.blocks.ProcessorBlock;
 import com.mcjty.tut2block.blocks.ProcessorBlockEntity;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.common.data.LanguageProvider;
 
 public class TutLanguageProvider extends LanguageProvider {
 

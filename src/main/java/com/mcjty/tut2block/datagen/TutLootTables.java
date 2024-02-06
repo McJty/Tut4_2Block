@@ -4,6 +4,8 @@ import com.mcjty.tut2block.Registration;
 import com.mcjty.tut2block.Tutorial2Block;
 import com.mcjty.tut2block.blocks.ComplexBlockEntity;
 import com.mcjty.tut2block.blocks.ProcessorBlockEntity;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.packs.VanillaBlockLoot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -18,7 +20,6 @@ import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
 import net.minecraft.world.level.storage.loot.functions.SetContainerContents;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,9 +35,9 @@ public class TutLootTables extends VanillaBlockLoot {
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return ForgeRegistries.BLOCKS.getEntries().stream()
-                .filter(e -> e.getKey().location().getNamespace().equals(Tutorial2Block.MODID))
-                .map(Map.Entry::getValue)
+        return BuiltInRegistries.BLOCK.holders()
+                .filter(e -> e.key().location().getNamespace().equals(Tutorial2Block.MODID))
+                .map(Holder.Reference::value)
                 .collect(Collectors.toList());
     }
 

@@ -17,7 +17,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
@@ -30,7 +31,8 @@ public class ComplexBlockRenderer implements BlockEntityRenderer<ComplexBlockEnt
 
     @Override
     public void render(ComplexBlockEntity be, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
-        be.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+        IItemHandler h = be.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, be.getBlockPos(), null);
+        if (h != null) {
             ItemStack stack = h.getStackInSlot(ComplexBlockEntity.SLOT);
             if (!stack.isEmpty()) {
                 ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
@@ -49,7 +51,7 @@ public class ComplexBlockRenderer implements BlockEntityRenderer<ComplexBlockEnt
                 renderBillboardQuadBright(poseStack, bufferSource.getBuffer(RenderType.translucent()), 0.5f, LIGHT);
                 poseStack.popPose();
             }
-        });
+        }
     }
 
 

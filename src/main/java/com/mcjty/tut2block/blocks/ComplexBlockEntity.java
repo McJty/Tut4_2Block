@@ -9,12 +9,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
+import net.neoforged.neoforge.common.util.Lazy;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,16 +26,10 @@ public class ComplexBlockEntity extends BlockEntity {
     public static int SLOT = 0;
 
     private final ItemStackHandler items = createItemHandler();
-    private final LazyOptional<IItemHandler> itemHandler = LazyOptional.of(() -> items);
+    private final Lazy<IItemHandler> itemHandler = Lazy.of(() -> items);
 
     public ComplexBlockEntity(BlockPos pos, BlockState state) {
         super(COMPLEX_BLOCK_ENTITY.get(), pos, state);
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        itemHandler.invalidate();
     }
 
     public void tickServer() {
@@ -133,15 +124,7 @@ public class ComplexBlockEntity extends BlockEntity {
         };
     }
 
-
-    @NotNull
-    @Override
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return itemHandler.cast();
-        } else {
-            return super.getCapability(cap, side);
-        }
+    public IItemHandler getItemHandler() {
+        return itemHandler.get();
     }
-
 }

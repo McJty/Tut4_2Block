@@ -3,8 +3,8 @@ package com.mcjty.tut2block.datagen;
 import com.mcjty.tut2block.Registration;
 import com.mcjty.tut2block.Tutorial2Block;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class TutItemModels extends ItemModelProvider {
 

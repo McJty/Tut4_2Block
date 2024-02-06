@@ -1,7 +1,7 @@
 package com.mcjty.tut2block.tools;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandlerModifiable;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import org.jetbrains.annotations.NotNull;
 
 public class AdaptedItemHandler implements IItemHandlerModifiable {

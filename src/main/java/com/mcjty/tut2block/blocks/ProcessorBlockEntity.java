@@ -3,7 +3,6 @@ package com.mcjty.tut2block.blocks;
 import com.mcjty.tut2block.Registration;
 import com.mcjty.tut2block.tools.AdaptedItemHandler;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -27,17 +26,14 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.CombinedInvWrapper;
+import net.neoforged.neoforge.common.util.Lazy;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class ProcessorBlockEntity extends BlockEntity {
@@ -60,14 +56,14 @@ public class ProcessorBlockEntity extends BlockEntity {
 
     private final ItemStackHandler inputItems = createItemHandler(SLOT_INPUT_COUNT);
     private final ItemStackHandler outputItems = createItemHandler(SLOT_OUTPUT_COUNT);
-    private final LazyOptional<IItemHandler> itemHandler = LazyOptional.of(() -> new CombinedInvWrapper(inputItems, outputItems));
-    private final LazyOptional<IItemHandler> inputItemHandler = LazyOptional.of(() -> new AdaptedItemHandler(inputItems) {
+    private final Lazy<IItemHandler> itemHandler = Lazy.of(() -> new CombinedInvWrapper(inputItems, outputItems));
+    private final Lazy<IItemHandler> inputItemHandler = Lazy.of(() -> new AdaptedItemHandler(inputItems) {
         @Override
         public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
             return ItemStack.EMPTY;
         }
     });
-    private final LazyOptional<IItemHandler> outputItemHandler = LazyOptional.of(() -> new AdaptedItemHandler(outputItems) {
+    private final Lazy<IItemHandler> outputItemHandler = Lazy.of(() -> new AdaptedItemHandler(outputItems) {
         @Override
         public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
             return stack;
@@ -76,14 +72,6 @@ public class ProcessorBlockEntity extends BlockEntity {
 
     public ProcessorBlockEntity(BlockPos pos, BlockState state) {
         super(Registration.PROCESSOR_BLOCK_ENTITY.get(), pos, state);
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        itemHandler.invalidate();
-        inputItemHandler.invalidate();
-        outputItemHandler.invalidate();
     }
 
     public void tickServer() {
@@ -132,7 +120,7 @@ public class ProcessorBlockEntity extends BlockEntity {
     private ItemStack meltItem(ItemStack stack) {
         SimpleContainer container = new SimpleContainer(stack);
         return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, container, this.level)
-                .map(recipe -> recipe.assemble(container, level.registryAccess())).orElse(ItemStack.EMPTY);
+                .map(recipe -> recipe.value().assemble(container, level.registryAccess())).orElse(ItemStack.EMPTY);
     }
 
     private ItemStack breakAsBlock(ItemStack stack) {
@@ -234,19 +222,15 @@ public class ProcessorBlockEntity extends BlockEntity {
         }
     }
 
-    @NotNull
-    @Override
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (side == null) {
-                return itemHandler.cast();
-            } else if (side == Direction.DOWN) {
-                return outputItemHandler.cast();
-            } else {
-                return inputItemHandler.cast();
-            }
-        } else {
-            return super.getCapability(cap, side);
-        }
+    public Lazy<IItemHandler> getItemHandler() {
+        return itemHandler;
+    }
+
+    public Lazy<IItemHandler> getInputItemHandler() {
+        return inputItemHandler;
+    }
+
+    public Lazy<IItemHandler> getOutputItemHandler() {
+        return outputItemHandler;
     }
 }
