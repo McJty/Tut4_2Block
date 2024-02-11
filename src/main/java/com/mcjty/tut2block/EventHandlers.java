@@ -14,7 +14,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
-public class ForgeEventHandlers {
+public class EventHandlers {
 
     @SubscribeEvent
     public void onPlayerInteract(PlayerInteractEvent.LeftClickBlock event) {

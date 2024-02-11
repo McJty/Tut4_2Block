@@ -28,7 +28,7 @@ public class Tutorial2Block {
         modEventBus.addListener(Channel::onRegisterPayloadHandler);
         modEventBus.addListener(this::registerCapabilities);
 
-        NeoForge.EVENT_BUS.register(new ForgeEventHandlers());
+        NeoForge.EVENT_BUS.register(new EventHandlers());
     }
 
     private void registerCapabilities(RegisterCapabilitiesEvent event) {
